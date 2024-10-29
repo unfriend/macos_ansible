@@ -23,10 +23,6 @@
         - htop
       loop_control:
         label: "{{ item }}"
-      register: homebrew_install_results
-      until: homebrew_install_results is succeeded
-      retries: 3
-      delay: 5
 
     - name: Install Homebrew Casks
       homebrew_cask:
@@ -41,79 +37,49 @@
         - grandperspective
         - vlc
         - crossover
+        - google-drive
+        - visual-studio-code
+        - brave-browser
+        - google-chrome
       loop_control:
         label: "{{ item }}"        
               
 
-    - name: Download Brave browser DMG
-      get_url:
-        url: https://laptop-updates.brave.com/latest/osx/Brave-Browser.dmg
-        dest: /tmp/Brave-Browser.dmg
+    # - name: Download Brave browser DMG
+    #   get_url:
+    #     url: https://laptop-updates.brave.com/latest/osx/Brave-Browser.dmg
+    #     dest: /tmp/Brave-Browser.dmg
 
-    - name: Mount the DMG
-      command: hdiutil attach /tmp/Brave-Browser.dmg -nobrowse -quiet
-      register: mounted_dmg
+    # - name: Mount the DMG
+    #   command: hdiutil attach /tmp/Brave-Browser.dmg -nobrowse -quiet
+    #   register: mounted_dmg
 
-    - name: Install Brave
-      command: cp -R /Volumes/Brave\ Browser/Brave\ Browser.app /Applications/
-      when: mounted_dmg is succeeded
+    # - name: Install Brave
+    #   command: cp -R /Volumes/Brave\ Browser/Brave\ Browser.app /Applications/
+    #   when: mounted_dmg is succeeded
 
-    - name: Unmount the DMG
-      command: hdiutil detach /Volumes/Brave\ Browser
-      when: mounted_dmg is succeeded
+    # - name: Unmount the DMG
+    #   command: hdiutil detach /Volumes/Brave\ Browser
+    #   when: mounted_dmg is succeeded
 
 
 
-    - name: Download Chrome browser DMG
-      get_url:
-        url: https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg
-        dest: /tmp/googlechrome.dmg
+    # - name: Download Chrome browser DMG
+    #   get_url:
+    #     url: https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg
+    #     dest: /tmp/googlechrome.dmg
 
-    - name: Mount the DMG
-      command: hdiutil attach /tmp/googlechrome.dmg -nobrowse -quiet
-      register: mounted_dmg
+    # - name: Mount the DMG
+    #   command: hdiutil attach /tmp/googlechrome.dmg -nobrowse -quiet
+    #   register: mounted_dmg
 
-    - name: Install Chrome
-      command: cp -R /Volumes/Google\ Chrome/Google\ Chrome.app /Applications/
-      when: mounted_dmg is succeeded
+    # - name: Install Chrome
+    #   command: cp -R /Volumes/Google\ Chrome/Google\ Chrome.app /Applications/
+    #   when: mounted_dmg is succeeded
 
-    - name: Unmount the DMG
-      command: hdiutil detach /Volumes/Google\ Chrome
-      when: mounted_dmg is succeeded
-    
-    - name: Download google drive DMG
-      get_url:
-        url: https://dl.google.com/drive-file-stream/GoogleDriveFileStream.dmg
-        dest: /tmp/GoogleDriveFileStream.dmg
-
-    - name: Mount the DMG
-      command: hdiutil attach /tmp/GoogleDriveFileStream.dmg -nobrowse -quiet
-      register: mounted_dmg
-    
-    - name: Install Google Drive
-      command: cp -R /Volumes/Install\ Google\ Drive\ File\ Stream/Google\ Drive.app /Applications/
-      when: mounted_dmg is succeeded
-
-    - name: Unmount the DMG 
-      command: hdiutil detach /Volumes/Install\ Google\ Drive\ File\ Stream
-      when: mounted_dmg is succeeded
-
-    - name: Download visual studio code DMG
-      get_url:
-        url: https://code.visualstudio.com/sha/download?build=stable&os=darwin-universal
-        dest: /tmp/VisualStudioCode.dmg
-    
-    - name: Mount the DMG
-      command: hdiutil attach /tmp/VisualStudioCode.dmg -nobrowse -quiet
-      register: mounted_dmg
-    
-    - name: Install Visual Studio Code
-      command: cp -R /Volumes/Visual\ Studio\ Code/Visual\ Studio\ Code.app /Applications/
-      when: mounted_dmg is succeeded
-    
-    - name: Unmount the DMG
-      command: hdiutil detach /Volumes/Visual\ Studio\ Code
-      when: mounted_dmg is succeeded
+    # - name: Unmount the DMG
+    #   command: hdiutil detach /Volumes/Google\ Chrome
+    #   when: mounted_dmg is succeeded
 
 
 
@@ -131,7 +97,7 @@
     
     - name: macOS settings
       shell: defaults write {{ item }}
-      loop: 
+      with_items: 
         - com.apple.universalaccess reduceTransparency -bool true # Reduce transparency
         - com.apple.dock autohide -bool true # Automatically hide and show the Dock
         - NSGlobalDomain "AppleShowAllExtensions" -bool "true" # Show all filename extensions in Finder
@@ -153,5 +119,5 @@
         - com.apple.AppleMultitouchTrackpad "Dragging" -bool "true"
         - com.apple.dock "expose-group-apps" -bool "true" # Group windows by application in Mission Control
         - -g com.apple.swipescrolldirection -bool false # Set scrolling direction to regular
-      args:
-        executable: /bin/bash
+      loop_control:
+        label: "{{ item }}"
