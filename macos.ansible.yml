@@ -23,6 +23,22 @@
         - htop
       loop_control:
         label: "{{ item }}"
+
+    - name: Install Homebrew Casks
+      homebrew_cask:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - barrier
+        - hot
+        - keepingyouawake
+        - lulu
+        - bettertouchtool
+        - grandperspective
+        - vlc
+        - crossover
+      loop_control:
+        label: "{{ item }}"
               
 
     - name: Download Brave browser DMG
@@ -42,6 +58,61 @@
       command: hdiutil detach /Volumes/Brave\ Browser
       when: mounted_dmg is succeeded
 
+
+
+    - name: Download Chrome browser DMG
+      get_url:
+        url: https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg
+        dest: /tmp/googlechrome.dmg
+
+    - name: Mount the DMG
+      command: hdiutil attach /tmp/googlechrome.dmg -nobrowse -quiet
+      register: mounted_dmg
+
+    - name: Install Chrome
+      command: cp -R /Volumes/Google\ Chrome/Google\ Chrome.app /Applications/
+      when: mounted_dmg is succeeded
+
+    - name: Unmount the DMG
+      command: hdiutil detach /Volumes/Google\ Chrome
+      when: mounted_dmg is succeeded
+    
+    - name: Download google drive DMG
+      get_url:
+        url: https://dl.google.com/drive-file-stream/GoogleDriveFileStream.dmg
+        dest: /tmp/GoogleDriveFileStream.dmg
+
+    - name: Mount the DMG
+      command: hdiutil attach /tmp/GoogleDriveFileStream.dmg -nobrowse -quiet
+      register: mounted_dmg
+    
+    - name: Install Google Drive
+      command: cp -R /Volumes/Install\ Google\ Drive\ File\ Stream/Google\ Drive.app /Applications/
+      when: mounted_dmg is succeeded
+
+    - name: Unmount the DMG 
+      command: hdiutil detach /Volumes/Install\ Google\ Drive\ File\ Stream
+      when: mounted_dmg is succeeded
+
+    - name: Download visual studio code DMG
+      get_url:
+        url: https://code.visualstudio.com/sha/download?build=stable&os=darwin-universal
+        dest: /tmp/VisualStudioCode.dmg
+    
+    - name: Mount the DMG
+      command: hdiutil attach /tmp/VisualStudioCode.dmg -nobrowse -quiet
+      register: mounted_dmg
+    
+    - name: Install Visual Studio Code
+      command: cp -R /Volumes/Visual\ Studio\ Code/Visual\ Studio\ Code.app /Applications/
+      when: mounted_dmg is succeeded
+    
+    - name: Unmount the DMG
+      command: hdiutil detach /Volumes/Visual\ Studio\ Code
+      when: mounted_dmg is succeeded
+
+
+
     - name: Install applications from the Mac App Store
       loop:
         - { name: "Telegram", id: "747648890" }
@@ -58,8 +129,27 @@
       shell: |
         defaults write com.apple.universalaccess reduceTransparency -bool true # Reduce transparency
         defaults write com.apple.dock autohide -bool true # Automatically hide and show the Dock
-
-
+        defaults write NSGlobalDomain "AppleShowAllExtensions" -bool "true" # Show all filename extensions in Finder
+        defaults write com.apple.finder ShowPathbar -bool true # Show path bar in Finder
+        defaults write com.apple.finder ShowStatusBar -bool true # Show status bar in Finder
+        defaults write com.apple.finder FXDefaultSearchScope -string "SCcf" # Search current folder by default
+        defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv" # Use list view in all Finder windows by default
+        defaults write com.apple.finder NewWindowTarget -string "PfHm" # Set Home as the default location for new Finder windows
+        defaults write com.apple.finder "FXEnableExtensionChangeWarning" -bool "false" # Disable warning when changing a file extension
+        defaults write com.apple.universalaccess "showWindowTitlebarIcons" -bool "true" # Show window titlebar icons
+        defaults write NSGlobalDomain "NSDocumentSaveNewDocumentsToCloud" -bool "false" # Save to disk (not to iCloud) by default
+        defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true # Avoid creating .DS_Store files on network volumes
+        defaults write com.apple.menuextra.battery ShowPercent -string "YES" # Show battery percentage in the menu bar
+        defaults write com.apple.menuextra.clock DateFormat -string "EEE d MMM HH:mm" # Show date and time in the menu bar
+        defaults write com.apple.menuextra.clock FlashDateSeparators -bool false # Don't flash the time separators
+        defaults write com.apple.menuextra.clock IsAnalog -bool false # Show digital clock in the menu bar
+        defaults write com.apple.menuextra.clock Show24Hour -bool true # Use a 24-hour clock
+        defaults write NSGlobalDomain com.apple.mouse.scaling -float "3" # Set mouse speed to 3
+        defaults write com.apple.AppleMultitouchTrackpad "Dragging" -bool "true"
+        defaults write com.apple.dock "expose-group-apps" -bool "true" && killall Dock
+        defaults write -g com.apple.swipescrolldirection -bool false # Set scrolling direction to regular
         killall SystemUIServer
+        killall Finder
+        killall Dock
       args:
         executable: /bin/bash
