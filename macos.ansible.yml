@@ -13,15 +13,14 @@
         executable: /bin/bash
 
     - name: Install Homebrew packages
-      loop:
-      - mas
-      - yt-dlp
-      - ffmpeg
-      - htop
-      
-      - homebrew:
-          name: "{{ item }}"
-          state: present
+      homebrew:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - mas
+        - yt-dlp
+        - ffmpeg
+        - htop
       loop_control:
         label: "{{ item }}"
               
