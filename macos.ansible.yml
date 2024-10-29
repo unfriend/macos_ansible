@@ -23,6 +23,10 @@
         - htop
       loop_control:
         label: "{{ item }}"
+      register: homebrew_install_results
+      until: homebrew_install_results is succeeded
+      retries: 3
+      delay: 5
 
     - name: Install Homebrew Casks
       homebrew_cask:
@@ -38,7 +42,7 @@
         - vlc
         - crossover
       loop_control:
-        label: "{{ item }}"
+        label: "{{ item }}"        
               
 
     - name: Download Brave browser DMG
