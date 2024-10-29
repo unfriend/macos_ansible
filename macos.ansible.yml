@@ -12,15 +12,19 @@
       args:
         executable: /bin/bash
 
-    - name: Install mas (Mac App Store command line interface)
-      homebrew:
-        name: mas
-        state: present
-
-    - name: Install yt-dlp
-      homebrew:
-        name: yt-dlp
-        state: present
+    - name: Install Homebrew packages
+      loop:
+      - mas
+      - yt-dlp
+      - ffmpeg
+      - htop
+      
+      - homebrew:
+          name: "{{ item }}"
+          state: present
+      loop_control:
+        label: "{{ item }}"
+              
 
     - name: Download Brave browser DMG
       get_url:
@@ -39,15 +43,24 @@
       command: hdiutil detach /Volumes/Brave\ Browser
       when: mounted_dmg is succeeded
 
-    - name: Install Telegram from App Store
-      shell: |
-          mas install 747648890
-      args:
-        executable: /bin/bash
+    - name: Install applications from the Mac App Store
+      loop:
+        - { name: "Telegram", id: "747648890" }
+        - { name: "The Unarchiver", id: "425424353" }
+        - { name: Bitwarden, id: "1352778147" }
 
-    - name: Enable Reduce transparency
+      command: mas install {{ item.id }}
+      register: mas_install_results
+      changed_when: "'Already installed' not in mas_install_results.stdout"
+      loop_control:
+        label: "{{ item.name }}"
+    
+    - name: macos settings
       shell: |
-        defaults write com.apple.universalaccess reduceTransparency -bool true
+        defaults write com.apple.universalaccess reduceTransparency -bool true # Reduce transparency
+        defaults write com.apple.dock autohide -bool true # Automatically hide and show the Dock
+
+
         killall SystemUIServer
       args:
         executable: /bin/bash
