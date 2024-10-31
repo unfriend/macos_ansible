@@ -14,7 +14,7 @@
       args:
         executable: /bin/bash
 
-    - name: Install Homebrew packages
+    - name: Install Homebrew Packages
       homebrew:
         name: "{{ item }}"
         state: present
@@ -110,15 +110,16 @@
         - com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true # Enable the automatic update check
         - com.apple.SoftwareUpdate ScheduleFrequency -int 1 # Check for software updates daily, not just once per week
         - com.apple.SoftwareUpdate AutomaticDownload -int 1 # Download newly available updates in background
-        - com.apple.commerce AutoUpdate -bool true # Turn on app auto-update
+        - com.apple.commerce AutoUpdate -bool true # Turn on app auto-update for app store apps
         - com.apple.controlcenter "NSStatusItem Visible Siri" -bool false # Hide Siri from the menu bar
         - com.apple.controlcenter "NSStatusItem Visible UserSwitcher" -bool false # Hide user switcher from the menu bar
         - com.apple.controlcenter "NSStatusItem Visible Sound" -bool true # show sound in the menu bar
-        - com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Battery.menu"
-        - com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/AirPort.menu"
-        - com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Volume.menu"
-        - com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Bluetooth.menu"
-        - com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Displays.menu"
+        # - com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Battery.menu"
+        # - com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/AirPort.menu"
+        # - com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Volume.menu"
+        # - com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Bluetooth.menu"
+        # - com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Displays.menu"
+        # these do not work anymore :(
         
       loop_control:
         label: "{{ item }}"
