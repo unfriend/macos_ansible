@@ -111,9 +111,7 @@
         - com.apple.SoftwareUpdate ScheduleFrequency -int 1 # Check for software updates daily, not just once per week
         - com.apple.SoftwareUpdate AutomaticDownload -int 1 # Download newly available updates in background
         - com.apple.commerce AutoUpdate -bool true # Turn on app auto-update for app store apps
-        # change desktop background to solid black
-        - com.apple.desktop Background "default" -dict colorSpace "1" image-data "<00000000>"
-
+        #set desktop to black
         # - com.apple.controlcenter "NSStatusItem Visible Siri" -bool false # Hide Siri from the menu bar
         # - com.apple.controlcenter "NSStatusItem Visible UserSwitcher" -bool false # Hide user switcher from the menu bar
         # - com.apple.controlcenter "NSStatusItem Visible Sound" -bool true # show sound in the menu bar
