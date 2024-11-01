@@ -40,7 +40,6 @@
         - lulu
         - bettertouchtool
         - grandperspective
-        - vlc
         - wine-stable
         - google-drive
         - visual-studio-code
@@ -69,51 +68,55 @@
         - com.apple.universalaccess reduceTransparency -bool true # Reduce transparency
         - com.apple.universalaccess reduceMotion -bool true # Reduce motion
         - com.apple.dock autohide -bool true # Automatically hide and show the Dock
-        - com.apple.dock tilesize -int 72 # Set the icon size of Dock items to 36 pixels
-        - com.apple.dock largesize -int 96  # Set the icon size of magnified Dock items to 72 pixels
-        - com.apple.dock magnification -bool true # Enable magnification
+        - com.apple.dock tilesize -int 72 # Set the icon size of Dock items to 72 pixels
+        - com.apple.dock largesize -int 96  # Set the icon size of magnified Dock items to 96 pixels
+        - com.apple.dock magnification -bool true # Enable magnification for dock
         - com.apple.dock persistent-apps -array # Wipe all (default) app icons from the Dock. This is only really useful when setting up a new Mac, or if you don’t use the Dock to launch apps.
         - com.apple.dock show-recents -bool false # Don’t show recent applications in Dock
         - NSGlobalDomain "AppleShowAllExtensions" -bool "true" # Show all filename extensions in Finder
         - com.apple.finder ShowPathbar -bool true # Show path bar in Finder
         - com.apple.finder ShowStatusBar -bool true # Show status bar in Finder
-        - com.apple.finder FXDefaultSearchScope -string "SCcf" # Search current folder by default
+        - com.apple.finder FXDefaultSearchScope -string "SCcf" # Search current folder by default in finder
         - com.apple.finder FXPreferredViewStyle -string "Nlsv" # Use list view in all Finder windows by default
         - com.apple.finder NewWindowTarget -string "PfHm" # Set Home as the default location for new Finder windows
         - com.apple.finder "FXEnableExtensionChangeWarning" -bool "false" # Disable warning when changing a file extension
         - com.apple.universalaccess "showWindowTitlebarIcons" -bool "true" # Show window titlebar icons
         - NSGlobalDomain "NSDocumentSaveNewDocumentsToCloud" -bool "false" # Save to disk (not to iCloud) by default
         - com.apple.desktopservices DSDontWriteNetworkStores -bool true # Avoid creating .DS_Store files on network volumes
-        - com.apple.menuextra.battery ShowPercent -string "YES" # Show battery percentage in the menu bar
+        - com.apple.menuextra.battery ShowPercent -string "YES" # Show battery percentage in the menu bar (maybe not working)
         - com.apple.menuextra.clock DateFormat -string "EEE d MMM HH:mm" # Show date and time in the menu bar
         - com.apple.menuextra.clock FlashDateSeparators -bool false # Don't flash the time separators
         - com.apple.menuextra.clock IsAnalog -bool false # Show digital clock in the menu bar
         - com.apple.menuextra.clock Show24Hour -bool true # Use a 24-hour clock
         - NSGlobalDomain com.apple.mouse.scaling -float "3" # Set mouse speed to 3
-        - com.apple.AppleMultitouchTrackpad "Dragging" -bool "true" # enable dragging on touchpad
+        - com.apple.AppleMultitouchTrackpad "Dragging" -bool "true" # enable dragging on touchpad NOT WORKING
+        #neeed to enable touchpad tap to click
         - com.apple.dock "expose-group-apps" -bool "false" # dont Group windows by application in Mission Control
         - -g com.apple.swipescrolldirection -bool false # Set scrolling direction to regular
         - NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true # Expand save panel by default
         - NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true # Expand save panel by default
         - com.apple.print.PrintingPrefs "Quit When Finished" -bool true # Automatically quit printer app once the print jobs complete
-        - NSGlobalDomain NSDisableAutomaticTermination -bool true # Automatically quit printer app once the print jobs complete
+        - NSGlobalDomain NSDisableAutomaticTermination -bool true # disable automatic termination of inactive apps
         - NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false # Disable automatic capitalization as it’s annoying when typing code
         - NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false # Disable smart dashes as they’re annoying when typing code
         - NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false # Disable automatic period substitution as it’s annoying when typing code
         - NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false # Disable smart quotes as they’re annoying when typing code
         - NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false # Disable auto-correct
-        - com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true # Trackpad: enable tap to click for this user and for the login screen
-        - NSGlobalDomain com.apple.mouse.tapBehavior -int 1 # Trackpad: enable tap to click for this user and for the login screen
-        - SGlobalDomain AppleKeyboardUIMode -int 3 # Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)
-        - com.apple.universalaccess closeViewScrollWheelToggle -bool true # Use scroll gesture with the Ctrl (^) modifier key to zoom
-        - com.apple.universalaccess HIDScrollZoomModifierMask -int 262144 # Use scroll gesture with the Ctrl (^) modifier key to zoom
+        # - com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true # Trackpad: enable tap to click for this user and for the login screen NOT WORKING
+        # - NSGlobalDomain com.apple.mouse.tapBehavior -int 1 # Trackpad: enable tap to click for this user and for the login screen NOT WORKING
+        # - SGlobalDomain AppleKeyboardUIMode -int 3 # Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs) NOT WORKING
+        # - com.apple.universalaccess closeViewScrollWheelToggle -bool true # Use scroll gesture with the Ctrl (^) modifier key to zoom NOT WORKING
+        # - com.apple.universalaccess HIDScrollZoomModifierMask -int 262144 # Use scroll gesture with the Ctrl (^) modifier key to zoom NOT WORKING
         - com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true # Enable the automatic update check
         - com.apple.SoftwareUpdate ScheduleFrequency -int 1 # Check for software updates daily, not just once per week
         - com.apple.SoftwareUpdate AutomaticDownload -int 1 # Download newly available updates in background
         - com.apple.commerce AutoUpdate -bool true # Turn on app auto-update for app store apps
-        - com.apple.controlcenter "NSStatusItem Visible Siri" -bool false # Hide Siri from the menu bar
-        - com.apple.controlcenter "NSStatusItem Visible UserSwitcher" -bool false # Hide user switcher from the menu bar
-        - com.apple.controlcenter "NSStatusItem Visible Sound" -bool true # show sound in the menu bar
+        # change desktop background to solid black
+        - com.apple.desktop Background "default" -dict colorSpace "1" image-data "<00000000>"
+
+        # - com.apple.controlcenter "NSStatusItem Visible Siri" -bool false # Hide Siri from the menu bar
+        # - com.apple.controlcenter "NSStatusItem Visible UserSwitcher" -bool false # Hide user switcher from the menu bar
+        # - com.apple.controlcenter "NSStatusItem Visible Sound" -bool true # show sound in the menu bar
         # - com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Battery.menu"
         # - com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/AirPort.menu"
         # - com.apple.systemuiserver menuExtras -array-add "/System/Library/CoreServices/Menu Extras/Volume.menu"
