@@ -112,6 +112,7 @@
         - com.apple.SoftwareUpdate AutomaticDownload -int 1 # Download newly available updates in background
         - com.apple.commerce AutoUpdate -bool true # Turn on app auto-update for app store apps
         - -g WebAutomaticTextReplacementEnabled -bool false # disable automatic text replacement
+        - -g NSAutomaticSpellingCorrectionEnabled -bool false # disable spell check and replacement
         #set desktop to black
         # - com.apple.controlcenter "NSStatusItem Visible Siri" -bool false # Hide Siri from the menu bar
         # - com.apple.controlcenter "NSStatusItem Visible UserSwitcher" -bool false # Hide user switcher from the menu bar
