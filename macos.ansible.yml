@@ -1,5 +1,5 @@
 ---
-  # this needs full disk and change other apps permissions
+  # this needs full disk and change other apps permissions set for terminal
   # needs ansible installed, run with 
   # ansible-playbook macos.ansible.yml --ask-become-pass
 - name: Set up macOS
